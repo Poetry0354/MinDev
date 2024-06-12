@@ -1,18 +1,4 @@
-//EJERCICIO OPCIONAL
-//* Dificultad extra.
-/* Crea una agenda de contactos por terminal.
- * - Debes implementar funcionalidades de búsqueda, inserción, actualización
- *   y eliminación de contactos.
- * - Cada contacto debe tener un nombre y un número de teléfono.
- * - El programa solicita en primer lugar cuál es la operación que se quiere realizar,
- *   y a continuación los datos necesarios para llevarla a cabo.
- * - El programa no puede dejar introducir números de teléfono no númericos y con más
- *   de 11 dígitos (o el número de dígitos que quieras).
- * - También se debe proponer una operación de finalización del programa.
- * */
-
-
-const mi_agenda = {}; 
+const mi_agenda = []; 
 
 alert("Por favor, elige una de las siguientes opciones");
 
@@ -78,3 +64,63 @@ function actualizarContacto () {
         alert(actualizar_contac + " fue actualizado a " + nuevoNombre)
     }
 }
+
+function eliminarContacto () {
+    let eliminar_contac = null;
+    do {
+        eliminar_contac = prompt("Que Contacto Elimnar? : ")
+    } while (!eliminar_contac);
+    let eliminar_resultado = mi_agenda.findIndex(function (contacto) { 
+        return contacto.nombre.toLowerCase() === eliminar_contac.toLowerCase();
+    } );
+    if (eliminar_resultado === undefined) {
+        alert(eliminar_contac + " no existe");
+    } else {
+        mi_agenda.splice(eliminar_resultado, 1);
+        alert(eliminar_contac + " fue eliminado");
+    }
+}
+
+function mostrarAgenda () {
+    let mostrar = null;
+    do {
+        mostrar = prompt("Mostrar Agenda? : ")
+    } while (!mostrar);
+    alert(JSON.stringify(mi_agenda, null, 2));
+}
+
+// ... (resto del código)
+
+function opciones () {
+    let option = '';
+    let menu = 'MENU: \n 1. Buscar contacto \n 2. Agregar contacto \n 3. Actualizar contacto \n 4. Eliminar contacto \n 5. Mostrar agenda \n 6. Salir';
+    while (option !== "6") {
+        option = prompt(menu);
+        switch (option) { // Cambiamos "opcion" por "option"
+        case '1':
+            buscarContacto();
+            // Eliminamos la llamada recursiva a opciones()
+            break;
+        case '2':
+            agregarContacto();
+            // Eliminamos la llamada recursiva a opciones()
+            break;
+        case '3':
+            actualizarContacto();
+            // Eliminamos la llamada recursiva a opciones()
+            break;
+        case '4':
+            eliminarContacto();
+            // Eliminamos la llamada recursiva a opciones()
+            break;
+        case '5':
+            mostrarAgenda();
+            // Eliminamos la llamada recursiva a opciones()
+            break;
+        default:
+            alert('Opcion no valida');
+            break;
+        }
+    }
+}
+opciones();
